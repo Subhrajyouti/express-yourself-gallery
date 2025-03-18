@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { Github } from "lucide-react";
@@ -47,7 +46,7 @@ const DataJobMarketProject = () => {
       {/* Main Navigation */}
       <Navbar />
       
-      {/* Hero Section - Added more padding to move title down */}
+      {/* Hero Section - Added more top padding to move title further down */}
       <div className="relative h-[65vh] w-full">
         <img 
           src="/data_science.jpg" 
@@ -55,7 +54,7 @@ const DataJobMarketProject = () => {
           className="h-full w-full object-cover"
         />
         <div className="absolute inset-0 bg-black/70">
-          <div className="container h-full flex flex-col justify-center pt-20 pb-20">
+          <div className="container h-full flex flex-col justify-center pt-36 pb-20">
             <div className="max-w-3xl">              
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4">
                 Data Job Market Analysis
