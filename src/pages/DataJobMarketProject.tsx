@@ -202,31 +202,16 @@ const DataJobMarketProject = () => {
                       <div className="p-4 space-y-4">
                         <Accordion type="single" collapsible className="mb-4">
                           <AccordionItem value="code1">
-                            <AccordionTrigger>View Code
-                            </AccordionTrigger>
+                            <AccordionTrigger>View Code</AccordionTrigger>
                             <AccordionContent>
-                                      <div className="bg-card/20 p-4 rounded-md overflow-x-auto relative">
-                                                        <button 
-                                                          onClick={() => copyToClipboard(`SELECT DATE_TRUNC('month', date) AS month, 
-                                   SUM(fare_amount) AS total_revenue
-                            FROM fact_trips
-                            GROUP BY month
-                            ORDER BY monh;`)}
-                                                          className="absolute right-2 top-2 p-1 rounded hover:bg-primary/10"
-                                                          aria-label="Copy code"
-                                                        >
-                                                          <Copy size={16} />
-                                                        </button>
-                                                        <pre className="text-sm">
-                                                          {`SELECT DATE_TRUNC('month', date) AS month, 
-                                   SUM(fare_amount) AS total_revenue
-                            FROM fact_trips
-                            GROUP BY month
-                            ORDER BY month;`}
-                                                        </pre>
-                                                      </div>
-                                                    </AccordionContent>
-                                                  </AccordionItem>
+                              <pre className="bg-muted p-4 rounded-md overflow-x-auto text-xs">
+                                <code>
+                                  {`fig, ax = plt.subplots(len(job_titles), 1) for i, job_title in enumerate(job_titles):df_plot = df_skills_perc[df_skills_perc['job_title_short'] == job_title].head(5)[::-1]sns.barplot(data=df_plot, x='skill_percent', y='job_skills', ax=ax[i], hue='skill_count', palette='dark:b_r')plt.show()`}
+                                </code>
+                              </pre>
+                            </AccordionContent>
+                          </AccordionItem>
+                        </Accordion>
                         
                         <div className="rounded-lg overflow-hidden border">
                           <img 
@@ -270,7 +255,8 @@ const DataJobMarketProject = () => {
                             <AccordionContent>
                               <pre className="bg-muted p-4 rounded-md overflow-x-auto text-xs">
                                 <code>
-                                  {`# Code will be uploaded later`}
+                                  {`from matplotlib.ticker import PercentFormatter df_plot = df_DA_US_percent.iloc[:, :5]sns.lineplot(data=df_plot, dashes=False, legend='full', palette='tab10')plt.gca().yaxis.set_major_formatter(PercentFormatter(decimals=0))plt.show()
+`}
                                 </code>
                               </pre>
                             </AccordionContent>
@@ -319,7 +305,7 @@ const DataJobMarketProject = () => {
                             <AccordionContent>
                               <pre className="bg-muted p-4 rounded-md overflow-x-auto text-xs">
                                 <code>
-                                  {`# Code will be uploaded later`}
+                                  {`sns.boxplot(data=df_US_top6, x='salary_year_avg', y='job_title_short', order=job_order)ticks_x = plt.FuncFormatter(lambda y, pos: f'${int(y/1000)}K') plt.gca().xaxis.set_major_formatter(ticks_x) plt.show()`}
                                 </code>
                               </pre>
                             </AccordionContent>
@@ -368,7 +354,7 @@ const DataJobMarketProject = () => {
                             <AccordionContent>
                               <pre className="bg-muted p-4 rounded-md overflow-x-auto text-xs">
                                 <code>
-                                  {`# Code will be uploaded later`}
+                                  {`fig, ax = plt.subplots(2, 1)  # Top 10 Highest Paid Skills for Data Analysts sns.barplot(data=df_DA_top_pay, x='median', y=df_DA_top_pay.index, hue='median', ax=ax[0], palette='dark:b_r')# Top 10 Most In-Demand Skills for Data Analystsr')sns.barplot(data=df_DA_skills, x='median', y=df_DA_skills.index, hue='median', ax=ax[1], palette='light:b')plt.show()`}
                                 </code>
                               </pre>
                             </AccordionContent>
@@ -417,7 +403,7 @@ const DataJobMarketProject = () => {
                             <AccordionContent>
                               <pre className="bg-muted p-4 rounded-md overflow-x-auto text-xs">
                                 <code>
-                                  {`# Code will be uploaded later`}
+                                  {`from matplotlib.ticker import PercentFormatter # Create a scatter plot scatter = sns.scatterplot(f_DA_skills_tech_high_demand,x='skill_percent',y='median_salary',hue='technology',  # Color by technologypalette='bright',  # Use a bright palette for distinct colorslegend='full'  # Ensure the legend is shown)plt.show()`}
                                 </code>
                               </pre>
                             </AccordionContent>
