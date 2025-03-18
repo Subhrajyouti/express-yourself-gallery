@@ -13,15 +13,13 @@ type SectionType = {
 };
 
 const SECTIONS: SectionType[] = [
-  { id: "overview", title: "Overview" },
+  { id: "overview", title: "Project Overview" },
   { id: "objectives", title: "Objectives" },
-  { id: "data-sources", title: "Data Sources" },
+  { id: "data-description", title: "Data Description" },
   { id: "methodology", title: "Methodology" },
-  { id: "key-findings", title: "Key Findings" },
-  { id: "skills-analysis", title: "Skills Analysis" },
-  { id: "salary-trends", title: "Salary Trends" },
-  { id: "geographic-distribution", title: "Geographic Distribution" },
-  { id: "conclusion", title: "Conclusion" }
+  { id: "key-insights", title: "Key Insights" },
+  { id: "challenges", title: "Challenges & Learnings" },
+  { id: "project-files", title: "Project Files" }
 ];
 
 type DataJobMarketSidebarProps = {
