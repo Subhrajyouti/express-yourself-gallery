@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { Github } from "lucide-react";
@@ -12,6 +13,7 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/component
 const DataJobMarketProject = () => {
   const location = useLocation();
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
+  const [showStickyNav, setShowStickyNav] = useState(false);
   
   // Handle hash navigation
   useEffect(() => {
@@ -28,12 +30,24 @@ const DataJobMarketProject = () => {
     }
   }, [location]);
 
+  // Add scroll event listener to handle sticky navigation
+  useEffect(() => {
+    const handleScroll = () => {
+      // Show the sticky navigation after scrolling past the hero section
+      const scrollPosition = window.scrollY;
+      setShowStickyNav(scrollPosition > 500); // Adjust this threshold as needed
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
     <div className="flex min-h-screen flex-col">
       {/* Main Navigation */}
       <Navbar />
       
-      {/* Hero Section - Reduced height and moved title up */}
+      {/* Hero Section - Added more padding to move title down */}
       <div className="relative h-[65vh] w-full">
         <img 
           src="/data_science.jpg" 
@@ -41,7 +55,7 @@ const DataJobMarketProject = () => {
           className="h-full w-full object-cover"
         />
         <div className="absolute inset-0 bg-black/70">
-          <div className="container h-full flex flex-col justify-center pb-20">
+          <div className="container h-full flex flex-col justify-center pt-20 pb-20">
             <div className="max-w-3xl">              
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4">
                 Data Job Market Analysis
@@ -75,8 +89,15 @@ const DataJobMarketProject = () => {
         </div>
       </div>
 
-      {/* Section Navigation */}
-      <DataJobMarketSidebar />
+      {/* Section Navigation - will be shown conditionally either here or as sticky */}
+      {!showStickyNav && <DataJobMarketSidebar />}
+      
+      {/* Sticky Navigation - shows when scrolling */}
+      {showStickyNav && (
+        <div className="sticky top-0 z-50">
+          <DataJobMarketSidebar sticky={true} />
+        </div>
+      )}
       
       {/* Content */}
       <div className="container py-12">
@@ -243,8 +264,8 @@ const DataJobMarketProject = () => {
             </section>
           </div>
             
-          <div className="lg:col-span-1 relative">
-            <div className="sticky top-[120px] space-y-8">
+          <div className="lg:col-span-1">
+            <div className="space-y-8">
               <div className="rounded-xl overflow-hidden">
                 <img 
                   src="/data_science2.jpg" 

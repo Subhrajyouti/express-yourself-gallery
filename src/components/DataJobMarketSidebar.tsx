@@ -24,7 +24,11 @@ const SECTIONS: SectionType[] = [
   { id: "conclusion", title: "Conclusion" }
 ];
 
-const DataJobMarketSidebar = () => {
+type DataJobMarketSidebarProps = {
+  sticky?: boolean;
+};
+
+const DataJobMarketSidebar = ({ sticky = false }: DataJobMarketSidebarProps) => {
   const navigate = useNavigate();
   const { hash } = useLocation();
   const currentSection = hash ? hash.replace("#", "") : "overview";
@@ -41,7 +45,10 @@ const DataJobMarketSidebar = () => {
   };
 
   return (
-    <div className="bg-background/95 border-b border-border/50">
+    <div className={cn(
+      "bg-background/95 backdrop-blur-lg border-b border-border/50",
+      sticky ? "w-full" : ""
+    )}>
       <div className="container max-w-7xl mx-auto py-4">
         <div className="flex items-center justify-between mb-2">
           <h2 className="text-lg font-medium">Jump to Section</h2>
