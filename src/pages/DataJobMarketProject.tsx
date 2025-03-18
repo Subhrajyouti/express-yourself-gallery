@@ -24,13 +24,14 @@ const DataJobMarketProject = () => {
     insight5: false
   });
   
-  // Handle hash navigation
+  // Handle hash navigation with adjusted offset
   useEffect(() => {
     if (location.hash) {
       const id = location.hash.replace('#', '');
       const element = document.getElementById(id);
       if (element) {
-        const yOffset = -100;
+        // Adjust this offset to fix the scrolling issue (reduced from -100 to -150)
+        const yOffset = -150;
         const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
         window.scrollTo({ top: y, behavior: 'smooth' });
       }
@@ -83,10 +84,13 @@ const DataJobMarketProject = () => {
               
               <div className="flex flex-wrap gap-2 mb-6">
                 <Badge className="bg-white text-black hover:bg-white/90">Python</Badge>
-                <Badge className="bg-white text-black hover:bg-white/90">Excel</Badge>
-                <Badge className="bg-white text-black hover:bg-white/90">SQL</Badge>
-                <Badge className="bg-white text-black hover:bg-white/90">Matplotlib</Badge>
                 <Badge className="bg-white text-black hover:bg-white/90">Pandas</Badge>
+                <Badge className="bg-white text-black hover:bg-white/90">Matplotlib</Badge>
+                <Badge className="bg-white text-black hover:bg-white/90">Seaborn</Badge>
+                <Badge className="bg-white text-black hover:bg-white/90">Excel</Badge>
+                <Badge className="bg-white text-black hover:bg-white/90">Power BI</Badge>
+                <Badge className="bg-white text-black hover:bg-white/90">GitHub</Badge>
+                <Badge className="bg-white text-black hover:bg-white/90">Jupyter Notebooks</Badge>
               </div>
               
               <Button
@@ -95,7 +99,7 @@ const DataJobMarketProject = () => {
                 className="gap-2 bg-blue-500 text-white border-blue-500/20 hover:bg-blue-600"
                 asChild
               >
-                <a href="https://github.com/Subhrajyouti/Data-Job-Market-Analysis" target="_blank" rel="noopener noreferrer">
+                <a href="https://github.com/Subhrajyouti/Data-Science-Job-Market-Research-with-Python" target="_blank" rel="noopener noreferrer">
                   <Github className="h-4 w-4" />
                   View Code
                 </a>
@@ -138,7 +142,7 @@ const DataJobMarketProject = () => {
               </ul>
             </section>
 
-            <section id="data-sources" className="mb-16">
+            <section id="data-description" className="mb-16">
               <h2 className="text-2xl font-bold mb-6">3️⃣ Data Description & Data Model</h2>
               <div className="space-y-4 text-muted-foreground">
                 <p>
@@ -177,7 +181,7 @@ const DataJobMarketProject = () => {
               </ul>
             </section>
 
-            <section id="key-findings" className="mb-16">
+            <section id="key-insights" className="mb-16">
               <h2 className="text-2xl font-bold mb-6">5️⃣ Key Insights</h2>
               
               <div className="space-y-8">
@@ -186,7 +190,7 @@ const DataJobMarketProject = () => {
                   <Collapsible open={openInsights.insight1} onOpenChange={() => toggleInsight('insight1')}>
                     <CollapsibleTrigger asChild>
                       <div className="flex justify-between items-center p-4 cursor-pointer bg-muted/40 hover:bg-muted/60">
-                        <h3 className="text-lg font-medium">📌 What are the most demanded skills for the top 3 most popular data roles?</h3>
+                        <h3 className="text-lg font-medium">1️⃣ What are the most demanded skills for the top 3 most popular data roles?</h3>
                         {openInsights.insight1 ? 
                           <ChevronUp className="h-5 w-5 text-muted-foreground" /> : 
                           <ChevronDown className="h-5 w-5 text-muted-foreground" />
@@ -235,7 +239,7 @@ const DataJobMarketProject = () => {
                   <Collapsible open={openInsights.insight2} onOpenChange={() => toggleInsight('insight2')}>
                     <CollapsibleTrigger asChild>
                       <div className="flex justify-between items-center p-4 cursor-pointer bg-muted/40 hover:bg-muted/60">
-                        <h3 className="text-lg font-medium">📌 How are in-demand skills trending for Data Analysts?</h3>
+                        <h3 className="text-lg font-medium">2️⃣ How are in-demand skills trending for Data Analysts?</h3>
                         {openInsights.insight2 ? 
                           <ChevronUp className="h-5 w-5 text-muted-foreground" /> : 
                           <ChevronDown className="h-5 w-5 text-muted-foreground" />
@@ -284,7 +288,7 @@ const DataJobMarketProject = () => {
                   <Collapsible open={openInsights.insight3} onOpenChange={() => toggleInsight('insight3')}>
                     <CollapsibleTrigger asChild>
                       <div className="flex justify-between items-center p-4 cursor-pointer bg-muted/40 hover:bg-muted/60">
-                        <h3 className="text-lg font-medium">📌 How well do jobs and skills pay for Data Analysts?</h3>
+                        <h3 className="text-lg font-medium">3️⃣ How well do jobs and skills pay for Data Analysts?</h3>
                         {openInsights.insight3 ? 
                           <ChevronUp className="h-5 w-5 text-muted-foreground" /> : 
                           <ChevronDown className="h-5 w-5 text-muted-foreground" />
@@ -333,7 +337,7 @@ const DataJobMarketProject = () => {
                   <Collapsible open={openInsights.insight4} onOpenChange={() => toggleInsight('insight4')}>
                     <CollapsibleTrigger asChild>
                       <div className="flex justify-between items-center p-4 cursor-pointer bg-muted/40 hover:bg-muted/60">
-                        <h3 className="text-lg font-medium">📌 What are the highest-paid and most in-demand skills for Data Analysts?</h3>
+                        <h3 className="text-lg font-medium">4️⃣ What are the highest-paid and most in-demand skills for Data Analysts?</h3>
                         {openInsights.insight4 ? 
                           <ChevronUp className="h-5 w-5 text-muted-foreground" /> : 
                           <ChevronDown className="h-5 w-5 text-muted-foreground" />
@@ -382,7 +386,7 @@ const DataJobMarketProject = () => {
                   <Collapsible open={openInsights.insight5} onOpenChange={() => toggleInsight('insight5')}>
                     <CollapsibleTrigger asChild>
                       <div className="flex justify-between items-center p-4 cursor-pointer bg-muted/40 hover:bg-muted/60">
-                        <h3 className="text-lg font-medium">📌 What are the most optimal skills to learn for Data Analysts?</h3>
+                        <h3 className="text-lg font-medium">5️⃣ What are the most optimal skills to learn for Data Analysts?</h3>
                         {openInsights.insight5 ? 
                           <ChevronUp className="h-5 w-5 text-muted-foreground" /> : 
                           <ChevronDown className="h-5 w-5 text-muted-foreground" />
@@ -440,50 +444,20 @@ const DataJobMarketProject = () => {
 
             <section id="project-files" className="mb-16">
               <h2 className="text-2xl font-bold mb-6">7️⃣ Project Files & Links</h2>
-              <ul className="space-y-4 text-muted-foreground">
-                <li className="flex items-start gap-2">
-                  <ExternalLink className="h-5 w-5 text-primary shrink-0 mt-0.5" />
-                  <div>
-                    <a 
-                      href="https://github.com/Subhrajyouti/Data-Job-Market-Analysis" 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="text-primary hover:underline"
-                    >
-                      GitHub Repository
-                    </a>
-                    <p className="text-sm text-muted-foreground">Complete project source code and documentation</p>
-                  </div>
-                </li>
-                <li className="flex items-start gap-2">
-                  <ExternalLink className="h-5 w-5 text-primary shrink-0 mt-0.5" />
-                  <div>
-                    <a 
-                      href="https://github.com/Subhrajyouti/Data-Job-Market-Analysis/blob/main/notebooks/2_Skill_Demand.ipynb" 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="text-primary hover:underline"
-                    >
-                      Skill Demand Analysis Notebook
-                    </a>
-                    <p className="text-sm text-muted-foreground">Jupyter notebook examining in-demand skills</p>
-                  </div>
-                </li>
-                <li className="flex items-start gap-2">
-                  <ExternalLink className="h-5 w-5 text-primary shrink-0 mt-0.5" />
-                  <div>
-                    <a 
-                      href="https://github.com/Subhrajyouti/Data-Job-Market-Analysis/blob/main/notebooks/3_Skills_Trend.ipynb" 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="text-primary hover:underline"
-                    >
-                      Skills Trend Analysis Notebook
-                    </a>
-                    <p className="text-sm text-muted-foreground">Jupyter notebook analyzing skill trends over time</p>
-                  </div>
-                </li>
-              </ul>
+              <div className="flex items-start gap-2 text-muted-foreground">
+                <ExternalLink className="h-5 w-5 text-primary shrink-0 mt-0.5" />
+                <div>
+                  <a 
+                    href="https://github.com/Subhrajyouti/Data-Science-Job-Market-Research-with-Python" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-primary hover:underline"
+                  >
+                    GitHub Repository
+                  </a>
+                  <p className="text-sm text-muted-foreground">Complete project source code and documentation</p>
+                </div>
+              </div>
             </section>
           </div>
             
@@ -535,12 +509,12 @@ const DataJobMarketProject = () => {
                   <div className="flex flex-wrap gap-2">
                     <Badge variant="outline">Python</Badge>
                     <Badge variant="outline">Pandas</Badge>
-                    <Badge variant="outline">Excel</Badge>
                     <Badge variant="outline">Matplotlib</Badge>
                     <Badge variant="outline">Seaborn</Badge>
-                    <Badge variant="outline">SQL</Badge>
+                    <Badge variant="outline">Excel</Badge>
+                    <Badge variant="outline">Power BI</Badge>
+                    <Badge variant="outline">GitHub</Badge>
                     <Badge variant="outline">Jupyter</Badge>
-                    <Badge variant="outline">Git</Badge>
                   </div>
                 </div>
                   
