@@ -211,7 +211,7 @@ const DataJobMarketProject = () => {
                                    SUM(fare_amount) AS total_revenue
                             FROM fact_trips
                             GROUP BY month
-                            ORDER BY month;`)}
+                            ORDER BY monh;`)}
                                                           className="absolute right-2 top-2 p-1 rounded hover:bg-primary/10"
                                                           aria-label="Copy code"
                                                         >
