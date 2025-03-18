@@ -1,6 +1,7 @@
+
 import { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
-import { Github } from "lucide-react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Github, ChevronDown, ChevronUp, ExternalLink } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -8,18 +9,29 @@ import DataJobMarketSidebar from "@/components/DataJobMarketSidebar";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const DataJobMarketProject = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
+  const [showStickyNav, setShowStickyNav] = useState(false);
+  const [openInsights, setOpenInsights] = useState<{[key: string]: boolean}>({
+    insight1: false,
+    insight2: false,
+    insight3: false,
+    insight4: false,
+    insight5: false
+  });
   
-  // Handle hash navigation
+  // Handle hash navigation with adjusted offset
   useEffect(() => {
     if (location.hash) {
       const id = location.hash.replace('#', '');
       const element = document.getElementById(id);
       if (element) {
-        const yOffset = -100;
+        // Adjust this offset to fix the scrolling issue (reduced from -100 to -150)
+        const yOffset = -150;
         const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
         window.scrollTo({ top: y, behavior: 'smooth' });
       }
@@ -28,12 +40,31 @@ const DataJobMarketProject = () => {
     }
   }, [location]);
 
+  // Add scroll event listener to handle sticky navigation
+  useEffect(() => {
+    const handleScroll = () => {
+      // Show the sticky navigation after scrolling past the hero section
+      const scrollPosition = window.scrollY;
+      setShowStickyNav(scrollPosition > 500); // Adjust this threshold as needed
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const toggleInsight = (key: string) => {
+    setOpenInsights(prev => ({
+      ...prev,
+      [key]: !prev[key]
+    }));
+  };
+
   return (
     <div className="flex min-h-screen flex-col">
       {/* Main Navigation */}
       <Navbar />
       
-      {/* Hero Section - Reduced height and moved title up */}
+      {/* Hero Section - Added more top padding to move title further down */}
       <div className="relative h-[65vh] w-full">
         <img 
           src="/data_science.jpg" 
@@ -41,22 +72,25 @@ const DataJobMarketProject = () => {
           className="h-full w-full object-cover"
         />
         <div className="absolute inset-0 bg-black/70">
-          <div className="container h-full flex flex-col justify-center pb-20">
+          <div className="container h-full flex flex-col justify-center pt-36 pb-20">
             <div className="max-w-3xl">              
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4">
                 Data Job Market Analysis
               </h1>
               
               <p className="text-lg text-white/80 mb-8">
-                A data-driven exploration of the current data job landscape—empowering insights for career decisions and hiring strategies.
+                A data-driven exploration of the most valuable skills in the data job market—focusing on Data Analyst roles and the skills that maximize employability and earnings.
               </p>
               
               <div className="flex flex-wrap gap-2 mb-6">
                 <Badge className="bg-white text-black hover:bg-white/90">Python</Badge>
                 <Badge className="bg-white text-black hover:bg-white/90">Pandas</Badge>
-                <Badge className="bg-white text-black hover:bg-white/90">Data Visualization</Badge>
                 <Badge className="bg-white text-black hover:bg-white/90">Matplotlib</Badge>
                 <Badge className="bg-white text-black hover:bg-white/90">Seaborn</Badge>
+                <Badge className="bg-white text-black hover:bg-white/90">Excel</Badge>
+                <Badge className="bg-white text-black hover:bg-white/90">Power BI</Badge>
+                <Badge className="bg-white text-black hover:bg-white/90">GitHub</Badge>
+                <Badge className="bg-white text-black hover:bg-white/90">Jupyter Notebooks</Badge>
               </div>
               
               <Button
@@ -65,7 +99,7 @@ const DataJobMarketProject = () => {
                 className="gap-2 bg-blue-500 text-white border-blue-500/20 hover:bg-blue-600"
                 asChild
               >
-                <a href="https://github.com/yourusername/data-job-market-analysis" target="_blank" rel="noopener noreferrer">
+                <a href="https://github.com/Subhrajyouti/Data-Science-Job-Market-Research-with-Python" target="_blank" rel="noopener noreferrer">
                   <Github className="h-4 w-4" />
                   View Code
                 </a>
@@ -75,176 +109,360 @@ const DataJobMarketProject = () => {
         </div>
       </div>
 
-      {/* Section Navigation */}
-      <DataJobMarketSidebar />
+      {/* Section Navigation - will be shown conditionally either here or as sticky */}
+      {!showStickyNav && <DataJobMarketSidebar />}
+      
+      {/* Sticky Navigation - shows when scrolling */}
+      {showStickyNav && (
+        <div className="sticky top-0 z-50">
+          <DataJobMarketSidebar sticky={true} />
+        </div>
+      )}
       
       {/* Content */}
       <div className="container py-12">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2">
             <section id="overview" className="mb-16">
-              <h2 className="text-2xl font-bold mb-6">Project Overview</h2>
+              <h2 className="text-2xl font-bold mb-6">1️⃣ Project Overview</h2>
               <p className="text-muted-foreground mb-4">
-                This project presents a comprehensive analysis of the current data job market landscape, examining trends in job postings, required skills, salary distributions, and geographic concentrations for data science, data engineering, and data analysis roles.
-              </p>
-              <p className="text-muted-foreground">
-                Using data collected from major job platforms and professional networks, this analysis provides insights into how the data profession is evolving, what employers are looking for, and how job seekers can position themselves for success in this rapidly growing field.
+                This project aims to uncover the most valuable skills in the data job market, focusing on Data Analyst roles.
+                By analyzing job postings, salary data, and skill trends, I identified the skills that maximize employability and earnings. 
+                Using Python, Excel, and visualization techniques, I examined how salaries and skill demand fluctuate over time.
               </p>
             </section>
 
             <section id="objectives" className="mb-16">
-              <h2 className="text-2xl font-bold mb-6">Objectives</h2>
+              <h2 className="text-2xl font-bold mb-6">2️⃣ Objectives</h2>
               <ul className="list-disc pl-6 space-y-2 text-muted-foreground">
-                <li>Identify current trends in data job postings across different industries</li>
-                <li>Analyze the distribution of required skills and qualifications for data roles</li>
-                <li>Examine salary ranges and factors influencing compensation</li>
-                <li>Map geographic distribution of data job opportunities</li>
-                <li>Compare entry-level versus senior role requirements and expectations</li>
-                <li>Identify emerging skills and technologies in the data field</li>
+                <li>Identify top-paying & high-demand skills for Data Analysts</li>
+                <li>Analyze salary distributions across different job titles</li>
+                <li>Investigate skill trends over time to highlight growing demands</li>
+                <li>Help data professionals prioritize learning efforts for career growth</li>
               </ul>
             </section>
 
-            <section id="data-sources" className="mb-16">
-              <h2 className="text-2xl font-bold mb-6">Data Sources</h2>
-              <p className="text-muted-foreground mb-4">
-                The analysis draws on multiple data sources to provide a comprehensive view of the current job market:
-              </p>
-              <ul className="list-disc pl-6 space-y-2 text-muted-foreground">
-                <li>Over 10,000 job postings from LinkedIn, Indeed, and Glassdoor</li>
-                <li>Salary information from H1B visa applications and anonymous self-reported data</li>
-                <li>Industry reports on hiring trends in technology and data fields</li>
-                <li>Survey data from current professionals in data roles</li>
-              </ul>
+            <section id="data-description" className="mb-16">
+              <h2 className="text-2xl font-bold mb-6">3️⃣ Data Description & Data Model</h2>
+              <div className="space-y-4 text-muted-foreground">
+                <p>
+                  <strong>Dataset Source:</strong> Data from Luke Barousse's Python Course on job postings.
+                </p>
+                <p>
+                  <strong>Key Columns:</strong> Job titles, salaries, locations, skills required.
+                </p>
+                <div>
+                  <strong>Data Processing Steps:</strong>
+                  <ul className="list-disc pl-6 mt-2">
+                    <li>Removed duplicates and standardized job titles</li>
+                    <li>Converted job posting dates into a structured time series</li>
+                    <li>Filtered for United States-based jobs to ensure consistency</li>
+                  </ul>
+                </div>
+                
+                <div className="mt-6">
+                  <img 
+                    src="/data_modelling.png" 
+                    alt="Data Model" 
+                    className="w-full max-w-xl rounded-lg border border-border"
+                  />
+                </div>
+              </div>
             </section>
 
             <section id="methodology" className="mb-16">
-              <h2 className="text-2xl font-bold mb-6">Methodology</h2>
-              <p className="text-muted-foreground mb-4">
-                This project employed a mixed-methods approach combining web scraping, natural language processing, and statistical analysis:
-              </p>
+              <h2 className="text-2xl font-bold mb-6">4️⃣ Methodology</h2>
               <ul className="list-disc pl-6 space-y-2 text-muted-foreground">
-                <li>Web scraping using Python (BeautifulSoup and Selenium) to collect job posting data</li>
-                <li>Text analysis and NLP techniques to extract and categorize skills from job descriptions</li>
-                <li>Statistical analysis to identify patterns in salary data and job requirements</li>
-                <li>Geospatial analysis to map job concentrations across regions</li>
-                <li>Time series analysis to identify trends over the past 24 months</li>
+                <li><strong>Data Cleaning:</strong> Removed null values, formatted dates, and standardized skill names</li>
+                <li><strong>Exploratory Analysis:</strong> Used Python (Pandas, Seaborn, Matplotlib) for data insights</li>
+                <li><strong>Trend Analysis:</strong> Grouped job postings by time to see skill demand shifts</li>
+                <li><strong>Salary Insights:</strong> Compared salary distributions for different roles & locations</li>
+                <li><strong>Visualization Techniques:</strong> Used bar charts, scatter plots, line graphs to display results</li>
               </ul>
             </section>
 
-            <section id="key-findings" className="mb-16">
-              <h2 className="text-2xl font-bold mb-6">Key Findings</h2>
-              <div className="space-y-4 text-muted-foreground">
-                <p>
-                  <strong>Growth Trends:</strong> The demand for data professionals has increased by 37% over the past two years, with data engineering roles growing at the fastest rate (45% increase).
-                </p>
-                <p>
-                  <strong>Industry Distribution:</strong> Financial services, healthcare, and technology remain the top industries hiring data professionals, with e-commerce showing the fastest growth in new positions.
-                </p>
-                <p>
-                  <strong>Required Experience:</strong> 65% of roles require at least 3-5 years of experience, with only 15% of postings explicitly labeled as entry-level positions.
-                </p>
-                <p>
-                  <strong>Education Requirements:</strong> While 78% of postings prefer or require advanced degrees, there is a growing trend (22% increase) in roles that prioritize skills and experience over formal education.
-                </p>
-              </div>
-            </section>
-
-            <section id="skills-analysis" className="mb-16">
-              <h2 className="text-2xl font-bold mb-6">Skills Analysis</h2>
-              <p className="text-muted-foreground mb-4">
-                Analysis of technical and non-technical skills mentioned in job postings reveals:
-              </p>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                <div>
-                  <h3 className="font-semibold mb-3">Technical Skills</h3>
-                  <ul className="list-disc pl-6 space-y-2 text-muted-foreground">
-                    <li>Python (87% of postings)</li>
-                    <li>SQL (82%)</li>
-                    <li>Machine Learning frameworks (64%)</li>
-                    <li>Cloud platforms - AWS, Azure, GCP (58%)</li>
-                    <li>Big Data technologies (52%)</li>
-                    <li>Data visualization tools (48%)</li>
-                  </ul>
+            <section id="key-insights" className="mb-16">
+              <h2 className="text-2xl font-bold mb-6">5️⃣ Key Insights</h2>
+              
+              <div className="space-y-8">
+                {/* Key Insight 1 */}
+                <div className="border rounded-lg overflow-hidden">
+                  <Collapsible open={openInsights.insight1} onOpenChange={() => toggleInsight('insight1')}>
+                    <CollapsibleTrigger asChild>
+                      <div className="flex justify-between items-center p-4 cursor-pointer bg-muted/40 hover:bg-muted/60">
+                        <h3 className="text-lg font-medium">1️⃣ What are the most demanded skills for the top 3 most popular data roles?</h3>
+                        {openInsights.insight1 ? 
+                          <ChevronUp className="h-5 w-5 text-muted-foreground" /> : 
+                          <ChevronDown className="h-5 w-5 text-muted-foreground" />
+                        }
+                      </div>
+                    </CollapsibleTrigger>
+                    
+                    <CollapsibleContent>
+                      <div className="p-4 space-y-4">
+                        <Accordion type="single" collapsible className="mb-4">
+                          <AccordionItem value="code1">
+                            <AccordionTrigger>View Code</AccordionTrigger>
+                            <AccordionContent>
+                              <pre className="bg-muted p-4 rounded-md overflow-x-auto text-xs">
+                                <code>
+                                  {`# Code will be uploaded later`}
+                                </code>
+                              </pre>
+                            </AccordionContent>
+                          </AccordionItem>
+                        </Accordion>
+                        
+                        <div className="rounded-lg overflow-hidden border">
+                          <img 
+                            src="/q1.jpg" 
+                            alt="Most demanded skills chart" 
+                            className="w-full"
+                          />
+                        </div>
+                        
+                        <div className="text-muted-foreground">
+                          <h4 className="font-medium mb-2">Key Insights:</h4>
+                          <ul className="list-disc pl-6 space-y-1">
+                            <li>SQL is the most requested skill for Data Analysts & Data Scientists, appearing in over 50% of job postings</li>
+                            <li>Python is the most in-demand skill for Data Engineers (68%)</li>
+                            <li>AWS, Azure, and Spark are crucial for Data Engineers, while Excel & Tableau remain essential for Data Analysts</li>
+                          </ul>
+                        </div>
+                      </div>
+                    </CollapsibleContent>
+                  </Collapsible>
                 </div>
-                <div>
-                  <h3 className="font-semibold mb-3">Non-Technical Skills</h3>
-                  <ul className="list-disc pl-6 space-y-2 text-muted-foreground">
-                    <li>Communication (74% of postings)</li>
-                    <li>Problem-solving (68%)</li>
-                    <li>Teamwork/collaboration (61%)</li>
-                    <li>Business acumen (47%)</li>
-                    <li>Project management (43%)</li>
-                    <li>Domain expertise (38%)</li>
-                  </ul>
+                
+                {/* Key Insight 2 */}
+                <div className="border rounded-lg overflow-hidden">
+                  <Collapsible open={openInsights.insight2} onOpenChange={() => toggleInsight('insight2')}>
+                    <CollapsibleTrigger asChild>
+                      <div className="flex justify-between items-center p-4 cursor-pointer bg-muted/40 hover:bg-muted/60">
+                        <h3 className="text-lg font-medium">2️⃣ How are in-demand skills trending for Data Analysts?</h3>
+                        {openInsights.insight2 ? 
+                          <ChevronUp className="h-5 w-5 text-muted-foreground" /> : 
+                          <ChevronDown className="h-5 w-5 text-muted-foreground" />
+                        }
+                      </div>
+                    </CollapsibleTrigger>
+                    
+                    <CollapsibleContent>
+                      <div className="p-4 space-y-4">
+                        <Accordion type="single" collapsible className="mb-4">
+                          <AccordionItem value="code2">
+                            <AccordionTrigger>View Code</AccordionTrigger>
+                            <AccordionContent>
+                              <pre className="bg-muted p-4 rounded-md overflow-x-auto text-xs">
+                                <code>
+                                  {`# Code will be uploaded later`}
+                                </code>
+                              </pre>
+                            </AccordionContent>
+                          </AccordionItem>
+                        </Accordion>
+                        
+                        <div className="rounded-lg overflow-hidden border">
+                          <img 
+                            src="/q2.jpg" 
+                            alt="Skills trending chart" 
+                            className="w-full"
+                          />
+                        </div>
+                        
+                        <div className="text-muted-foreground">
+                          <h4 className="font-medium mb-2">Key Insights:</h4>
+                          <ul className="list-disc pl-6 space-y-1">
+                            <li>SQL remains the most in-demand skill but is seeing a slight decline</li>
+                            <li>Excel demand increased sharply from September, overtaking Python & Tableau</li>
+                            <li>Power BI is gaining traction, although it is still less common than SQL/Tableau</li>
+                          </ul>
+                        </div>
+                      </div>
+                    </CollapsibleContent>
+                  </Collapsible>
+                </div>
+                
+                {/* Key Insight 3 */}
+                <div className="border rounded-lg overflow-hidden">
+                  <Collapsible open={openInsights.insight3} onOpenChange={() => toggleInsight('insight3')}>
+                    <CollapsibleTrigger asChild>
+                      <div className="flex justify-between items-center p-4 cursor-pointer bg-muted/40 hover:bg-muted/60">
+                        <h3 className="text-lg font-medium">3️⃣ How well do jobs and skills pay for Data Analysts?</h3>
+                        {openInsights.insight3 ? 
+                          <ChevronUp className="h-5 w-5 text-muted-foreground" /> : 
+                          <ChevronDown className="h-5 w-5 text-muted-foreground" />
+                        }
+                      </div>
+                    </CollapsibleTrigger>
+                    
+                    <CollapsibleContent>
+                      <div className="p-4 space-y-4">
+                        <Accordion type="single" collapsible className="mb-4">
+                          <AccordionItem value="code3">
+                            <AccordionTrigger>View Code</AccordionTrigger>
+                            <AccordionContent>
+                              <pre className="bg-muted p-4 rounded-md overflow-x-auto text-xs">
+                                <code>
+                                  {`# Code will be uploaded later`}
+                                </code>
+                              </pre>
+                            </AccordionContent>
+                          </AccordionItem>
+                        </Accordion>
+                        
+                        <div className="rounded-lg overflow-hidden border">
+                          <img 
+                            src="/q3.jpg" 
+                            alt="Salary data chart" 
+                            className="w-full"
+                          />
+                        </div>
+                        
+                        <div className="text-muted-foreground">
+                          <h4 className="font-medium mb-2">Key Insights:</h4>
+                          <ul className="list-disc pl-6 space-y-1">
+                            <li>Senior Data Scientists have the highest salary potential (up to $600K)</li>
+                            <li>Data Engineers earn significantly more than Data Analysts</li>
+                            <li>Salary increases with seniority and specialization</li>
+                          </ul>
+                        </div>
+                      </div>
+                    </CollapsibleContent>
+                  </Collapsible>
+                </div>
+                
+                {/* Key Insight 4 */}
+                <div className="border rounded-lg overflow-hidden">
+                  <Collapsible open={openInsights.insight4} onOpenChange={() => toggleInsight('insight4')}>
+                    <CollapsibleTrigger asChild>
+                      <div className="flex justify-between items-center p-4 cursor-pointer bg-muted/40 hover:bg-muted/60">
+                        <h3 className="text-lg font-medium">4️⃣ What are the highest-paid and most in-demand skills for Data Analysts?</h3>
+                        {openInsights.insight4 ? 
+                          <ChevronUp className="h-5 w-5 text-muted-foreground" /> : 
+                          <ChevronDown className="h-5 w-5 text-muted-foreground" />
+                        }
+                      </div>
+                    </CollapsibleTrigger>
+                    
+                    <CollapsibleContent>
+                      <div className="p-4 space-y-4">
+                        <Accordion type="single" collapsible className="mb-4">
+                          <AccordionItem value="code4">
+                            <AccordionTrigger>View Code</AccordionTrigger>
+                            <AccordionContent>
+                              <pre className="bg-muted p-4 rounded-md overflow-x-auto text-xs">
+                                <code>
+                                  {`# Code will be uploaded later`}
+                                </code>
+                              </pre>
+                            </AccordionContent>
+                          </AccordionItem>
+                        </Accordion>
+                        
+                        <div className="rounded-lg overflow-hidden border">
+                          <img 
+                            src="/q4.jpg" 
+                            alt="High-paid skills chart" 
+                            className="w-full"
+                          />
+                        </div>
+                        
+                        <div className="text-muted-foreground">
+                          <h4 className="font-medium mb-2">Key Insights:</h4>
+                          <ul className="list-disc pl-6 space-y-1">
+                            <li>High-paying skills: dplyr, Bitbucket, Gitlab (up to $200K)</li>
+                            <li>Most in-demand skills: Excel, PowerPoint, SQL</li>
+                            <li>Balancing specialized & fundamental skills is key for maximizing opportunities</li>
+                          </ul>
+                        </div>
+                      </div>
+                    </CollapsibleContent>
+                  </Collapsible>
+                </div>
+                
+                {/* Key Insight 5 */}
+                <div className="border rounded-lg overflow-hidden">
+                  <Collapsible open={openInsights.insight5} onOpenChange={() => toggleInsight('insight5')}>
+                    <CollapsibleTrigger asChild>
+                      <div className="flex justify-between items-center p-4 cursor-pointer bg-muted/40 hover:bg-muted/60">
+                        <h3 className="text-lg font-medium">5️⃣ What are the most optimal skills to learn for Data Analysts?</h3>
+                        {openInsights.insight5 ? 
+                          <ChevronUp className="h-5 w-5 text-muted-foreground" /> : 
+                          <ChevronDown className="h-5 w-5 text-muted-foreground" />
+                        }
+                      </div>
+                    </CollapsibleTrigger>
+                    
+                    <CollapsibleContent>
+                      <div className="p-4 space-y-4">
+                        <Accordion type="single" collapsible className="mb-4">
+                          <AccordionItem value="code5">
+                            <AccordionTrigger>View Code</AccordionTrigger>
+                            <AccordionContent>
+                              <pre className="bg-muted p-4 rounded-md overflow-x-auto text-xs">
+                                <code>
+                                  {`# Code will be uploaded later`}
+                                </code>
+                              </pre>
+                            </AccordionContent>
+                          </AccordionItem>
+                        </Accordion>
+                        
+                        <div className="rounded-lg overflow-hidden border">
+                          <img 
+                            src="/q5.jpg" 
+                            alt="Optimal skills chart" 
+                            className="w-full"
+                          />
+                        </div>
+                        
+                        <div className="text-muted-foreground">
+                          <h4 className="font-medium mb-2">Key Insights:</h4>
+                          <ul className="list-disc pl-6 space-y-1">
+                            <li>Oracle skills have the highest median salary ($97K) but are less common</li>
+                            <li>Python & Tableau balance high salaries with steady demand</li>
+                            <li>SQL is widely required but doesn't command the highest salaries</li>
+                            <li>Cloud technologies (AWS, Azure) are becoming more lucrative</li>
+                          </ul>
+                        </div>
+                      </div>
+                    </CollapsibleContent>
+                  </Collapsible>
                 </div>
               </div>
-              <p className="text-muted-foreground">
-                Emerging skills showing the fastest growth in demand include MLOps, data ethics, causal inference, and specialized industry knowledge in regulated sectors.
-              </p>
             </section>
 
-            <section id="salary-trends" className="mb-16">
-              <h2 className="text-2xl font-bold mb-6">Salary Trends</h2>
-              <p className="text-muted-foreground mb-4">
-                Salary analysis reveals significant variations based on role, location, industry, and experience:
-              </p>
-              <div className="space-y-4 text-muted-foreground">
-                <p>
-                  <strong>Role-Based Differences:</strong> Data Engineers ($120,000-$160,000) and Machine Learning Engineers ($125,000-$165,000) command higher median salaries than Data Analysts ($85,000-$115,000).
-                </p>
-                <p>
-                  <strong>Experience Premium:</strong> The salary jump from 0-2 years to 3-5 years of experience averages 32%, while the increase from 3-5 years to 6+ years averages 28%.
-                </p>
-                <p>
-                  <strong>Industry Variations:</strong> Finance and pharmaceutical sectors offer 15-20% higher compensation for equivalent roles compared to retail and education sectors.
-                </p>
-                <p>
-                  <strong>Remote Work Impact:</strong> Fully remote roles offer salaries 5-8% lower than on-site positions in high-cost locations, but 10-15% higher than on-site positions in lower-cost areas.
-                </p>
-              </div>
-            </section>
-
-            <section id="geographic-distribution" className="mb-16">
-              <h2 className="text-2xl font-bold mb-6">Geographic Distribution</h2>
-              <p className="text-muted-foreground mb-4">
-                Data job opportunities continue to be concentrated in major tech hubs, but with notable changes:
-              </p>
-              <div className="space-y-4 text-muted-foreground">
-                <p>
-                  <strong>Traditional Hubs:</strong> San Francisco Bay Area, New York, and Seattle remain the top regions by total job count, but their share of overall postings has decreased from 41% to 36% in the past two years.
-                </p>
-                <p>
-                  <strong>Emerging Hubs:</strong> Austin, Denver, and Raleigh-Durham show the fastest growth rates (45-60% increase in postings).
-                </p>
-                <p>
-                  <strong>Remote Opportunities:</strong> 42% of all data job postings now offer remote or hybrid options, compared to just 18% pre-pandemic.
-                </p>
-                <p>
-                  <strong>International Trends:</strong> Toronto, London, and Singapore lead in international growth markets for data professionals outside the US.
-                </p>
-              </div>
-            </section>
-
-            <section id="conclusion" className="mb-16">
-              <h2 className="text-2xl font-bold mb-6">Conclusion</h2>
-              <p className="text-muted-foreground mb-4">
-                The data job market continues to evolve rapidly, with several key implications for job seekers and employers:
-              </p>
+            <section id="challenges" className="mb-16">
+              <h2 className="text-2xl font-bold mb-6">6️⃣ Challenges & Learnings</h2>
               <ul className="list-disc pl-6 space-y-2 text-muted-foreground">
-                <li>T-shaped skill profiles (deep expertise in one area, broad knowledge across others) are increasingly valued</li>
-                <li>Specialized domain knowledge combined with technical skills commands premium compensation</li>
-                <li>Geographic flexibility is expanding opportunities beyond traditional tech hubs</li>
-                <li>The entry barrier remains high, with most roles requiring prior experience</li>
-                <li>Continuous learning is essential as the half-life of technical skills continues to shorten</li>
+                <li><strong>Handling Data Variations:</strong> Managing different job titles across datasets</li>
+                <li><strong>Visual Complexity:</strong> Designing effective salary & demand comparisons</li>
+                <li><strong>Market Trends:</strong> Keeping up with fast-changing skill requirements</li>
               </ul>
-              <p className="text-muted-foreground mt-4">
-                As the field matures, employers are increasingly seeking candidates who can bridge technical expertise with business impact, placing greater emphasis on communication skills and domain knowledge alongside technical proficiency.
-              </p>
+            </section>
+
+            <section id="project-files" className="mb-16">
+              <h2 className="text-2xl font-bold mb-6">7️⃣ Project Files & Links</h2>
+              <div className="flex items-start gap-2 text-muted-foreground">
+                <ExternalLink className="h-5 w-5 text-primary shrink-0 mt-0.5" />
+                <div>
+                  <a 
+                    href="https://github.com/Subhrajyouti/Data-Science-Job-Market-Research-with-Python" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-primary hover:underline"
+                  >
+                    GitHub Repository
+                  </a>
+                  <p className="text-sm text-muted-foreground">Complete project source code and documentation</p>
+                </div>
+              </div>
             </section>
           </div>
             
-          <div className="lg:col-span-1 relative">
-            <div className="sticky top-[120px] space-y-8">
+          <div className="lg:col-span-1">
+            <div className="space-y-8">
               <div className="rounded-xl overflow-hidden">
                 <img 
                   src="/data_science2.jpg" 
@@ -268,19 +486,19 @@ const DataJobMarketProject = () => {
                       <div className="h-5 w-5 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0 mt-0.5">
                         <div className="h-2 w-2 rounded-full bg-primary" />
                       </div>
-                      <span className="text-sm text-muted-foreground">Identified 37% growth in data jobs</span>
+                      <span className="text-sm text-muted-foreground">Identified top-paying skills</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <div className="h-5 w-5 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0 mt-0.5">
                         <div className="h-2 w-2 rounded-full bg-primary" />
                       </div>
-                      <span className="text-sm text-muted-foreground">Mapped salary trends across regions</span>
+                      <span className="text-sm text-muted-foreground">Mapped salary trends across roles</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <div className="h-5 w-5 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0 mt-0.5">
                         <div className="h-2 w-2 rounded-full bg-primary" />
                       </div>
-                      <span className="text-sm text-muted-foreground">Explored emerging skills in the field</span>
+                      <span className="text-sm text-muted-foreground">Created optimal skill learning paths</span>
                     </li>
                   </ul>
                 </div>
@@ -291,13 +509,12 @@ const DataJobMarketProject = () => {
                   <div className="flex flex-wrap gap-2">
                     <Badge variant="outline">Python</Badge>
                     <Badge variant="outline">Pandas</Badge>
-                    <Badge variant="outline">NumPy</Badge>
                     <Badge variant="outline">Matplotlib</Badge>
                     <Badge variant="outline">Seaborn</Badge>
-                    <Badge variant="outline">BeautifulSoup</Badge>
-                    <Badge variant="outline">Selenium</Badge>
-                    <Badge variant="outline">NLTK</Badge>
-                    <Badge variant="outline">GeoPandas</Badge>
+                    <Badge variant="outline">Excel</Badge>
+                    <Badge variant="outline">Power BI</Badge>
+                    <Badge variant="outline">GitHub</Badge>
+                    <Badge variant="outline">Jupyter</Badge>
                   </div>
                 </div>
                   
@@ -307,11 +524,11 @@ const DataJobMarketProject = () => {
                   <ul className="space-y-3 text-sm text-muted-foreground">
                     <li className="flex justify-between">
                       <span>Data Collection</span>
-                      <span>3 weeks</span>
+                      <span>2 weeks</span>
                     </li>
                     <li className="flex justify-between">
                       <span>Data Cleaning & Processing</span>
-                      <span>2 weeks</span>
+                      <span>3 weeks</span>
                     </li>
                     <li className="flex justify-between">
                       <span>Analysis & Visualization</span>
