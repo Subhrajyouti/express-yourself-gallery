@@ -208,7 +208,7 @@ const GoodCabsProject = () => {
       className="ml-2 text-sm text-primary hover:underline flex items-center"
     >
       <ExternalLink className="h-4 w-4 mr-1" />
-      View Live Dashboard
+      Click here if the Dashboard is not Working
     </a>
   </h2>
   <Card className="overflow-hidden hover:shadow-xl transition-all duration-500 hover:-translate-y-1 border border-border/50 hover:border-primary/30 shadow-md">
