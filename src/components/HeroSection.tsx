@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { ChevronDown, Download } from "lucide-react";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const HeroSection = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -44,7 +45,6 @@ const HeroSection = () => {
               
               <div className="flex flex-col sm:flex-row gap-4 pt-2">
                 <Button
-                  asChild
                   className="rounded-md bg-primary text-white hover:bg-primary/90 transition-all"
                 >
                   <a href="#projects">View Projects</a>
@@ -54,7 +54,7 @@ const HeroSection = () => {
                   variant="outline"
                   className="rounded-md border-primary/30 text-foreground hover:bg-primary/10 transition-all gap-2"
                 >
-                  <a href="/resume.pdf" download>
+                  <a href="./resume.pdf" download>
                     <Download className="h-4 w-4" />
                     Download Resume
                   </a>
@@ -75,7 +75,7 @@ const HeroSection = () => {
               <div className="relative h-64 w-64 md:h-80 md:w-80 overflow-hidden rounded-full">
                 <div className="absolute inset-0 bg-gradient-to-tr from-background/80 to-transparent opacity-50 mix-blend-overlay z-10"></div>
                 <img 
-                  src="/profile-photo.jpg" 
+                  src="./profile-photo.jpg" 
                   alt="Subhrajyoti Mahanta" 
                   className="w-full h-full object-cover transition-all duration-700 ease-in-out group-hover:scale-105 group-hover:brightness-110"
                 />

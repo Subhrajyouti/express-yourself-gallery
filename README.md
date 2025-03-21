@@ -5,12 +5,12 @@
 
 **URL**: https://lovable.dev/projects/433bd2fd-7c1a-49a1-8b65-d584a8b50bfa
 
-## How can I edit this code?zZ
+## How can I edit this code?
 
 There are several ways of editing your application.
 
 **Use Lovable**
-z
+
 Simply visit the [Lovable Project](https://lovable.dev/projects/433bd2fd-7c1a-49a1-8b65-d584a8b50bfa) and start prompting.
 
 Changes made via Lovable will be committed automatically to this repo.
