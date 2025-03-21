@@ -1,9 +1,10 @@
+
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Download, FileText, ExternalLink } from "lucide-react";
 
 const ResumeSection = () => {
-  const [resumeUrl, setResumeUrl] = useState("/resume.pdf");
+  const [resumeUrl, setResumeUrl] = useState("./resume.pdf");
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {

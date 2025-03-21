@@ -1,3 +1,4 @@
+
 import { Play } from "lucide-react";
 import { useState, useRef } from "react";
 
@@ -33,7 +34,7 @@ const IntroVideo = () => {
               <video 
                 ref={videoRef}
                 className="absolute inset-0 w-full h-full object-cover opacity-0"
-                src="/intro-video.mp4" // Place your video file in the public folder with this name
+                src="./intro-video.mp4" // Updated path with relative URL
                 controls
                 onPlay={() => setVideoPlaying(true)}
                 onEnded={() => setVideoPlaying(false)}
@@ -44,7 +45,7 @@ const IntroVideo = () => {
             <video 
               ref={videoRef}
               className="absolute inset-0 w-full h-full object-cover"
-              src="/intro-video.mp4" // Place your video file in the public folder with this name
+              src="./intro-video.mp4" // Updated path with relative URL
               controls
               autoPlay
               onEnded={() => setVideoPlaying(false)}
