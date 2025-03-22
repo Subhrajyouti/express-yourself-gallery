@@ -19,7 +19,7 @@ const projects: Project[] = [
     id: 9,
     title: "Monday Coffee Business Expansion Analysis",
     description: "Analyzing city performance to determine the best locations for business expansion using data-driven insights",
-    image: "./coffee1.jpg",
+    image: "/coffee1.jpg",
     tags: ["SQL", "Data Analysis", "Weighted Scoring", "Decision Making"],
     slug: "new-project"
   },
@@ -27,7 +27,7 @@ const projects: Project[] = [
     id: 8,
     title: "Data Job Market Analysis",
     description: "An in-depth analysis of data science job market trends, salary distributions, and required skills across different industries",
-    image: "./data_science.jpg",
+    image: "/data_science.jpg",
     tags: ["Python", "Pandas", "Data Visualization", "Job Market Analysis"],
     slug: "data-job-market-analysis"
   },
@@ -35,7 +35,7 @@ const projects: Project[] = [
     id: 7,
     title: "GoodCabs Performance Analysis & Dashboard",
     description: "A data-driven analysis of GoodCabs' operations using SQL, Power BI, and PostgreSQL to provide strategic insights to the Chief of Operations",
-    image: "./alexander-red-S9qxkJN0f4Q-unsplash.jpg",
+    image: "/alexander-red-S9qxkJN0f4Q-unsplash.jpg",
     tags: ["Power BI", "PostgreSQL", "SQL", "Data Analysis"],
     slug: "goodcabs-analysis"
   }
@@ -61,18 +61,18 @@ const ProjectsSection = () => {
 const ProjectCard = ({ project }: { project: Project }) => {
   // Special routing for specific projects
   const projectUrl = project.slug === "goodcabs-analysis" 
-    ? "/#/goodcabs-analysis" 
+    ? "/goodcabs-analysis" 
     : project.slug === "data-job-market-analysis"
-    ? "/#/data-job-market-analysis"
+    ? "/data-job-market-analysis"
     : project.slug === "new-project"
-    ? "/#/new-project"
+    ? "/new-project"
     : `/project/${project.slug}`;
 
   // Determine if external link (opens in new tab) or internal navigation
   const renderProjectLink = () => {
     return (
       <Link 
-        to={projectUrl.replace("/#", "")}
+        to={projectUrl}
         className="group block h-full"
       >
         <Card className="h-full overflow-hidden hover:shadow-xl transition-all duration-500 bg-background border border-border/50 hover:border-primary/30 hover:-translate-y-2 shadow-md">
