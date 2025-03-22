@@ -1,16 +1,15 @@
-
 # Welcome to your Lovable project
 
 ## Project info
 
 **URL**: https://lovable.dev/projects/433bd2fd-7c1a-49a1-8b65-d584a8b50bfa
 
-## How can I edit this code?zZ
+## How can I edit this code?
 
 There are several ways of editing your application.
 
 **Use Lovable**
-z
+
 Simply visit the [Lovable Project](https://lovable.dev/projects/433bd2fd-7c1a-49a1-8b65-d584a8b50bfa) and start prompting.
 
 Changes made via Lovable will be committed automatically to this repo.
@@ -25,10 +24,10 @@ Follow these steps:
 
 ```sh
 # Step 1: Clone the repository using the project's Git URL.
-git clone https://github.com/Subhrajyouti/express-yourself-gallery.git
+git clone <YOUR_GIT_URL>
 
 # Step 2: Navigate to the project directory.
-cd express-yourself-gallery
+cd <YOUR_PROJECT_NAME>
 
 # Step 3: Install the necessary dependencies.
 npm i
@@ -37,22 +36,23 @@ npm i
 npm run dev
 ```
 
-## Deploying to GitHub Pages
+**Edit a file directly in GitHub**
 
-This project is set up to deploy automatically to GitHub Pages. Here's how it works:
+- Navigate to the desired file(s).
+- Click the "Edit" button (pencil icon) at the top right of the file view.
+- Make your changes and commit the changes.
 
-1. Push your changes to the `main` branch
-2. The GitHub Action will automatically build and deploy your site to the `gh-pages` branch
-3. Your site will be available at: https://subhrajyouti.github.io/express-yourself-gallery/
+**Use GitHub Codespaces**
 
-If you need to manually deploy:
-
-1. Build the project: `npm run build`
-2. Push the `dist` folder to the `gh-pages` branch
+- Navigate to the main page of your repository.
+- Click on the "Code" button (green button) near the top right.
+- Select the "Codespaces" tab.
+- Click on "New codespace" to launch a new Codespace environment.
+- Edit files directly within the Codespace and commit and push your changes once you're done.
 
 ## What technologies are used for this project?
 
-This project is built with:
+This project is built with .
 
 - Vite
 - TypeScript
@@ -60,3 +60,10 @@ This project is built with:
 - shadcn-ui
 - Tailwind CSS
 
+## How can I deploy this project?
+
+Simply open [Lovable](https://lovable.dev/projects/433bd2fd-7c1a-49a1-8b65-d584a8b50bfa) and click on Share -> Publish.
+
+## I want to use a custom domain - is that possible?
+
+We don't support custom domains (yet). If you want to deploy your project under your own domain then we recommend using Netlify. Visit our docs for more details: [Custom domains](https://docs.lovable.dev/tips-tricks/custom-domain/)
