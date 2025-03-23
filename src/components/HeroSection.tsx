@@ -8,6 +8,7 @@ const HeroSection = () => {
   const [imageLoading, setImageLoading] = useState(true);
   const [imageLoadingProgress, setImageLoadingProgress] = useState(0);
   const [nameAnimationStage, setNameAnimationStage] = useState(0);
+  const [nameAnimationCycle, setNameAnimationCycle] = useState(false);
 
   useEffect(() => {
     setIsVisible(true);
@@ -40,9 +41,21 @@ const HeroSection = () => {
       return () => clearTimeout(lastNameTimer);
     }, 400);
     
+    // Set up the periodic name animation cycle
+    const nameCycleInterval = setInterval(() => {
+      setNameAnimationCycle(true);
+      
+      const resetCycle = setTimeout(() => {
+        setNameAnimationCycle(false);
+      }, 2000); // Reset after 2 seconds
+      
+      return () => clearTimeout(resetCycle);
+    }, 7000); // Every 7 seconds (5s waiting + 2s for animation)
+    
     return () => {
       clearInterval(progressInterval);
       clearTimeout(nameAnimationTimer);
+      clearInterval(nameCycleInterval);
     };
   }, []);
 
@@ -79,20 +92,26 @@ const HeroSection = () => {
               
               <h1 className="text-4xl md:text-6xl font-bold tracking-tight leading-tight md:leading-tight overflow-hidden">
                 <span 
-                  className={`inline-block transition-all duration-1000 transform ${
-                    nameAnimationStage >= 1 
-                      ? "translate-y-0 scale-100 opacity-100" 
-                      : "translate-y-full scale-110 opacity-0"
-                  }`}
+                  className={`inline-block transition-all duration-1000 transform
+                    ${nameAnimationStage >= 1 
+                      ? "translate-x-0 scale-100 opacity-100" 
+                      : "-translate-x-full scale-110 opacity-0"}
+                    ${nameAnimationCycle 
+                      ? "animate-grow-name" 
+                      : ""}
+                  `}
                 >
                   Subhrajyoti
                 </span>{" "}
                 <span 
-                  className={`text-gradient inline-block transition-all duration-1000 delay-300 transform ${
-                    nameAnimationStage >= 2 
+                  className={`text-gradient inline-block transition-all duration-1000 delay-300 transform
+                    ${nameAnimationStage >= 2 
                       ? "translate-x-0 opacity-100" 
-                      : "translate-x-1/4 opacity-0"
-                  }`}
+                      : "translate-x-1/4 opacity-0"}
+                    ${nameAnimationCycle 
+                      ? "animate-shrink-name" 
+                      : ""}
+                  `}
                 >
                   Mahanta
                 </span>

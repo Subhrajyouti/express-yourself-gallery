@@ -54,3 +54,36 @@ section[id] {
 .animate-shimmer {
   animation: shimmer 2.5s infinite;
 }
+
+/* New name animations */
+@keyframes grow-name {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.25);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes shrink-name {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.8);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.animate-grow-name {
+  animation: grow-name 2s ease-in-out;
+}
+
+.animate-shrink-name {
+  animation: shrink-name 2s ease-in-out;
+}
