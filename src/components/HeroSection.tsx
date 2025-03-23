@@ -63,11 +63,11 @@ const HeroSection = () => {
             </div>
           </div>
           
-          {/* Profile Photo with blended effect and animation */}
+          {/* Profile Photo with floating animation */}
           <div className={`md:w-1/2 flex justify-center mt-12 md:mt-0 transition-all duration-1000 ${
             isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-12"
           }`}>
-            <div className="relative group">
+            <div className="relative group animate-floating">
               {/* Gradient background glow effect */}
               <div className="absolute -inset-1 bg-gradient-to-r from-primary/20 via-primary/30 to-primary/10 rounded-full blur-xl opacity-70 group-hover:opacity-100 animate-pulse-slow transition-opacity duration-1000"></div>
               
