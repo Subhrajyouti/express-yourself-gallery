@@ -7,6 +7,7 @@ const HeroSection = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [imageLoading, setImageLoading] = useState(true);
   const [imageLoadingProgress, setImageLoadingProgress] = useState(0);
+  const [nameAnimationStage, setNameAnimationStage] = useState(0);
 
   useEffect(() => {
     setIsVisible(true);
@@ -27,8 +28,22 @@ const HeroSection = () => {
       setImageLoadingProgress(100);
       clearInterval(progressInterval);
     };
+
+    // Trigger name animation sequence
+    const nameAnimationTimer = setTimeout(() => {
+      setNameAnimationStage(1); // Start first name animation
+      
+      const lastNameTimer = setTimeout(() => {
+        setNameAnimationStage(2); // Start last name animation
+      }, 600);
+      
+      return () => clearTimeout(lastNameTimer);
+    }, 400);
     
-    return () => clearInterval(progressInterval);
+    return () => {
+      clearInterval(progressInterval);
+      clearTimeout(nameAnimationTimer);
+    };
   }, []);
 
   const scrollToProjects = () => {
@@ -62,8 +77,25 @@ const HeroSection = () => {
                 </span>
               </div>
               
-              <h1 className="text-4xl md:text-6xl font-bold tracking-tight leading-tight md:leading-tight">
-                Subhrajyoti <span className="text-gradient">Mahanta</span>
+              <h1 className="text-4xl md:text-6xl font-bold tracking-tight leading-tight md:leading-tight overflow-hidden">
+                <span 
+                  className={`inline-block transition-all duration-1000 transform ${
+                    nameAnimationStage >= 1 
+                      ? "translate-y-0 scale-100 opacity-100" 
+                      : "translate-y-full scale-110 opacity-0"
+                  }`}
+                >
+                  Subhrajyoti
+                </span>{" "}
+                <span 
+                  className={`text-gradient inline-block transition-all duration-1000 delay-300 transform ${
+                    nameAnimationStage >= 2 
+                      ? "translate-x-0 opacity-100" 
+                      : "translate-x-1/4 opacity-0"
+                  }`}
+                >
+                  Mahanta
+                </span>
               </h1>
               
               <p className="text-lg md:text-xl text-muted-foreground max-w-2xl leading-relaxed">
